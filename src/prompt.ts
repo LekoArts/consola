@@ -46,7 +46,9 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
         ? T["options"][number]["value"]
         : T["options"][number]
       : T extends MultiSelectOptions
-        ? T["options"]
+        ? T["options"][number] extends SelectOption
+          ? Array<T["options"][number]["value"]>
+          : Array<T["options"][number]>
         : unknown;
 
 export async function prompt<
